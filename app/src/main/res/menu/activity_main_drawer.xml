@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="General">
+        <menu>
+            <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_baseline_home_24"
+                android:title="@string/menu_home" />
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_baseline_person_24"
+                android:title="@string/menu_profile" />
+            <item
+                android:id="@+id/nav_notes"
+                android:icon="@drawable/ic_baseline_sticky_note_2_24"
+                android:title="@string/menu_notes" />
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/menu_gallery" />
+        </menu>
+    </item>
+
+    <item android:title="Logout">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_baseline_vpn_key_24"
+                android:title="@string/menu_logout" />
+        </menu>
+    </item>
+</menu>

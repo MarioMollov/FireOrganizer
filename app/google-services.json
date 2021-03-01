@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "710089738631",
+    "project_id": "fireorganizer-54c5a",
+    "storage_bucket": "fireorganizer-54c5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710089738631:android:3fa0e81de2e42d6ed3eb22",
+        "android_client_info": {
+          "package_name": "uni.fmi.masters.fireorganizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710089738631-qjcv515voa6ok16c9usiutjv86obplfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADJNy-ADmBcMq-23VR2UB2Phr39SlGc8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710089738631-qjcv515voa6ok16c9usiutjv86obplfj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
