@@ -1,16 +1,18 @@
 package uni.fmi.masters.fireorganizer;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,9 +21,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import uni.fmi.masters.fireorganizer.ui.home.HomeFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+
+    public static Context contextOfApplication;
+
+    public static Context getContextOfApplication() {
+        return contextOfApplication;
+    }
+
+    public static boolean isLogged = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -46,9 +51,27 @@ public class MainActivity extends AppCompatActivity {
 //                .setDrawerLayout(drawer) this is deprecate and should use setOpenableLayout()
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                FirebaseAuth fAuth = FirebaseAuth.getInstance();
+                int id = item.getItemId();
+                if(id == R.id.nav_logout){
+                    isLogged = false;
+                    fAuth.signOut();
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    finish();
+                }else {
+                    NavigationUI.onNavDestinationSelected(item,navController);
+                }
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -65,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {

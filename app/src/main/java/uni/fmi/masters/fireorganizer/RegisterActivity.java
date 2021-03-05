@@ -100,6 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        MainActivity.isLogged = true;
                         Toast.makeText(RegisterActivity.this, "User Created", Toast.LENGTH_SHORT).show();
 
                         // getting automatically generated user id from the user that we just created

@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 fAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        MainActivity.isLogged = true;
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
                     }
