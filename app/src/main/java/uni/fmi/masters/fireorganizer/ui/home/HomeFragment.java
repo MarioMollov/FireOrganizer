@@ -20,7 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import uni.fmi.masters.fireorganizer.R;
-import uni.fmi.masters.fireorganizer.RegisterActivity;
+import uni.fmi.masters.fireorganizer.Authentication.RegisterActivity;
 
 public class HomeFragment extends Fragment {
 

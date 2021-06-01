@@ -5,7 +5,7 @@
     android:id="@+id/nav_graph">
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="uni.fmi.masters.fireorganizer.FirstFragment"
+        android:name="uni.fmi.masters.fireorganizer.ui.gallery.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="uni.fmi.masters.fireorganizer.SecondFragment"
+        android:name="uni.fmi.masters.fireorganizer.ui.gallery.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 

@@ -1,4 +1,4 @@
-package uni.fmi.masters.fireorganizer;
+package uni.fmi.masters.fireorganizer.ui.notes;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-import uni.fmi.masters.fireorganizer.ui.notes.NotesFragment;
+import uni.fmi.masters.fireorganizer.R;
 
 public class EditNoteActivity extends AppCompatActivity {
 
@@ -70,7 +70,8 @@ public class EditNoteActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 // save the note
-                DocumentReference documentReference = db.collection(userID).document(noteID);
+                DocumentReference documentReference = db.collection(AddNoteActivity.FIREBASE_COLLECTION_NOTES).document(userID)
+                        .collection(AddNoteActivity.FIREBASE_COLLECTION_MYNOTES).document(noteID);
                 Map<String,Object> note = new HashMap<>();
                 note.put(AddNoteActivity.FIREBASE_NOTE_TITLE, nTitle);
                 note.put(AddNoteActivity.FIREBASE_NOTE_CONTENT, nContent);

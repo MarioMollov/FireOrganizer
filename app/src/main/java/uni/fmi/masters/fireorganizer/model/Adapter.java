@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import uni.fmi.masters.fireorganizer.NodeDetails;
+import uni.fmi.masters.fireorganizer.ui.notes.NodeDetails;
 import uni.fmi.masters.fireorganizer.R;
 
 public class Adapter  extends RecyclerView.Adapter<Adapter.ViewHolder> {

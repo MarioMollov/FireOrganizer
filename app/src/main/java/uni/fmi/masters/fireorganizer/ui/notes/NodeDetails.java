@@ -1,11 +1,10 @@
-package uni.fmi.masters.fireorganizer;
+package uni.fmi.masters.fireorganizer.ui.notes;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -16,6 +15,8 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import uni.fmi.masters.fireorganizer.R;
 
 public class NodeDetails extends AppCompatActivity {
 

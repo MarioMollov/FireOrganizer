@@ -1,11 +1,10 @@
-package uni.fmi.masters.fireorganizer;
+package uni.fmi.masters.fireorganizer.ui.notes;
 
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,7 +21,11 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
 
+import uni.fmi.masters.fireorganizer.R;
+
 public class AddNoteActivity extends AppCompatActivity {
+    public static final String FIREBASE_COLLECTION_NOTES = "notes";
+    public static final String FIREBASE_COLLECTION_MYNOTES = "myNotes";
     public static final String FIREBASE_NOTE_TITLE = "title";
     public static final String FIREBASE_NOTE_CONTENT = "content";
 
@@ -63,7 +66,8 @@ public class AddNoteActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 // save the note
-                DocumentReference documentReference = db.collection(userID).document();
+                DocumentReference documentReference = db.collection(FIREBASE_COLLECTION_NOTES).document(userID)
+                        .collection(FIREBASE_COLLECTION_MYNOTES).document();
                 Map<String,Object> note = new HashMap<>();
                 note.put(FIREBASE_NOTE_TITLE, nTitle);
                 note.put(FIREBASE_NOTE_CONTENT, nContent);

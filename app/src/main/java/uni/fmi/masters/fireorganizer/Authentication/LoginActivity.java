@@ -1,4 +1,4 @@
-package uni.fmi.masters.fireorganizer;
+package uni.fmi.masters.fireorganizer.Authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import uni.fmi.masters.fireorganizer.MainActivity;
+import uni.fmi.masters.fireorganizer.R;
 
 
 public class LoginActivity extends AppCompatActivity {

@@ -3,7 +3,6 @@ package uni.fmi.masters.fireorganizer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.Toast;
@@ -21,7 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import uni.fmi.masters.fireorganizer.ui.home.HomeFragment;
+import uni.fmi.masters.fireorganizer.Authentication.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 if(id == R.id.nav_logout){
                     isLogged = false;
                     fAuth.signOut();
-                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }else {
                     NavigationUI.onNavDestinationSelected(item,navController);

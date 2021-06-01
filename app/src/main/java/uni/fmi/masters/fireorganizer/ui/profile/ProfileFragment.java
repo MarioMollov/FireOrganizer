@@ -36,7 +36,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -50,7 +49,7 @@ import java.util.Map;
 
 import uni.fmi.masters.fireorganizer.MainActivity;
 import uni.fmi.masters.fireorganizer.R;
-import uni.fmi.masters.fireorganizer.RegisterActivity;
+import uni.fmi.masters.fireorganizer.Authentication.RegisterActivity;
 
 public class ProfileFragment extends Fragment {
 

@@ -34,11 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import uni.fmi.masters.fireorganizer.AddNoteActivity;
-import uni.fmi.masters.fireorganizer.EditNoteActivity;
-import uni.fmi.masters.fireorganizer.NodeDetails;
 import uni.fmi.masters.fireorganizer.R;
-import uni.fmi.masters.fireorganizer.model.Adapter;
 import uni.fmi.masters.fireorganizer.model.Note;
 
 public class NotesFragment extends Fragment {
@@ -58,7 +54,7 @@ public class NotesFragment extends Fragment {
         userID = fAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
 
-        Query query = db.collection(userID).orderBy(AddNoteActivity.FIREBASE_NOTE_TITLE, Query.Direction.DESCENDING);
+        Query query = db.collection("notes").document(userID).collection("myNotes").orderBy(AddNoteActivity.FIREBASE_NOTE_TITLE, Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Note> allNotes = new FirestoreRecyclerOptions.Builder<Note>()
                 .setQuery(query,Note.class)

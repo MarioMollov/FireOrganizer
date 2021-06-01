@@ -1,4 +1,4 @@
-package uni.fmi.masters.fireorganizer;
+package uni.fmi.masters.fireorganizer.Authentication;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import uni.fmi.masters.fireorganizer.MainActivity;
+import uni.fmi.masters.fireorganizer.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

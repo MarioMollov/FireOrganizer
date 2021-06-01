@@ -14,13 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FireOrganizer">
-        <activity android:name=".EditNoteActivity" android:theme="@style/Theme.FireOrganizer.NoActionBar"></activity>
+        <activity android:name=".ui.notes.EditNoteActivity" android:theme="@style/Theme.FireOrganizer.NoActionBar"></activity>
         <activity
-            android:name=".AddNoteActivity"
+            android:name=".ui.notes.AddNoteActivity"
             android:label="@string/title_activity_add_note"
             android:theme="@style/Theme.FireOrganizer.NoActionBar" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Authentication.RegisterActivity" />
+        <activity android:name=".Authentication.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NodeDetails"
+            android:name=".ui.notes.NodeDetails"
             android:label="@string/title_activity_node_details"
             android:theme="@style/Theme.FireOrganizer.NoActionBar" />
         <activity
