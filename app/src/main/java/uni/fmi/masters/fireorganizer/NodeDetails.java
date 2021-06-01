@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 public class NodeDetails extends AppCompatActivity {
 
+    Intent data;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,11 @@ public class NodeDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent data = getIntent();
+        data = getIntent();
 
 
-        TextView contentTV = findViewById(R.id.nodeDetailsContentTextView);
         TextView titleTV = findViewById(R.id.nodeDetailsTitleTextView);
+        TextView contentTV = findViewById(R.id.nodeDetailsContentTextView);
         contentTV.setMovementMethod(new ScrollingMovementMethod());
 
         contentTV.setText(data.getStringExtra("content"));
@@ -43,8 +45,12 @@ public class NodeDetails extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(view.getContext(),EditNoteActivity.class);
+                intent.putExtra("title", data.getStringExtra("title"));
+                intent.putExtra("content", data.getStringExtra("content"));
+                intent.putExtra("noteID", data.getStringExtra("noteID"));
+                startActivity(intent);
+                onBackPressed();
             }
         });
     }

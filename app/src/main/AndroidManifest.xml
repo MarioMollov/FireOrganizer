@@ -14,10 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FireOrganizer">
+        <activity android:name=".EditNoteActivity" android:theme="@style/Theme.FireOrganizer.NoActionBar"></activity>
         <activity
             android:name=".AddNoteActivity"
             android:label="@string/title_activity_add_note"
-            android:theme="@style/Theme.FireOrganizer.NoActionBar"></activity>
+            android:theme="@style/Theme.FireOrganizer.NoActionBar" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -44,7 +45,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>
