@@ -39,6 +39,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,8 +94,8 @@ public class ProfileFragment extends Fragment {
         // Take collection "users" and document with id = current user id
         documentReference = db.collection(RegisterActivity.COLLECTION_USERS).document(userID);
 
-        // this listener will return data adn will listen for data update
-        // and we the data is updated, the listener will return the new data automatically
+        // this listener will return data and will listen for data update
+        // and when the data is updated, the listener will return the new data automatically
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -108,6 +109,7 @@ public class ProfileFragment extends Fragment {
                     firstNameET.setText(fname);
                     lastNameET.setText(lname);
                     avatarIV.setImageURI(avatarUri);
+
                 }
             }
         });
@@ -222,7 +224,7 @@ public class ProfileFragment extends Fragment {
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 File f = new File(currentPhotoPath);
-                avatarIV.setImageURI(Uri.fromFile(f));
+                //avatarIV.setImageURI(Uri.fromFile(f));
                 Log.d(TAG, "Absolute Url of the image is: " + Uri.fromFile(f));
 
                 Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -274,6 +276,8 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onSuccess(Uri uri) {
                         Log.d(TAG, "Uploaded image url is: " + uri.toString());
+
+                        Picasso.get().load(uri).into(avatarIV);
                     }
                 });
 

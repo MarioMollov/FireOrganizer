@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -103,6 +104,12 @@ public class RegisterActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(fname + " " + lname)
+                                .build();
+                        fAuth.getCurrentUser().updateProfile(request);
+
+
                         MainActivity.isLogged = true;
                         Toast.makeText(RegisterActivity.this, "User Created", Toast.LENGTH_SHORT).show();
 

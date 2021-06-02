@@ -54,7 +54,8 @@ public class NotesFragment extends Fragment {
         userID = fAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
 
-        Query query = db.collection("notes").document(userID).collection("myNotes").orderBy(AddNoteActivity.FIREBASE_NOTE_TITLE, Query.Direction.DESCENDING);
+        Query query = db.collection(AddNoteActivity.FIREBASE_COLLECTION_NOTES).document(userID)
+                .collection(AddNoteActivity.FIREBASE_COLLECTION_MYNOTES).orderBy(AddNoteActivity.FIREBASE_NOTE_TITLE, Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Note> allNotes = new FirestoreRecyclerOptions.Builder<Note>()
                 .setQuery(query,Note.class)
@@ -101,7 +102,8 @@ public class NotesFragment extends Fragment {
                         menu.getMenu().add("Delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
-                                DocumentReference documentReference = db.collection(userID).document(docID);
+                                DocumentReference documentReference = db.collection(AddNoteActivity.FIREBASE_COLLECTION_NOTES).document(userID)
+                                        .collection(AddNoteActivity.FIREBASE_COLLECTION_MYNOTES).document(docID);
                                 documentReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {

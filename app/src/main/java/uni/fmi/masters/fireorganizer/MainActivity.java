@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -21,18 +23,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import uni.fmi.masters.fireorganizer.Authentication.LoginActivity;
+import uni.fmi.masters.fireorganizer.ui.profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
     public static Context contextOfApplication;
-
     public static Context getContextOfApplication() {
         return contextOfApplication;
     }
-
     public static boolean isLogged = true;
+
+    FirebaseAuth fAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,22 +75,31 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        fAuth = FirebaseAuth.getInstance();
+        View headerView = navigationView.getHeaderView(0);
+        TextView username = headerView.findViewById(R.id.headerUsernameTextView);
+        TextView email = headerView.findViewById(R.id.headerEmailTextView);
+
+        username.setText(fAuth.getCurrentUser().getDisplayName());
+        email.setText(fAuth.getCurrentUser().getEmail());
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_settings){
-            Toast.makeText(this, "Setting Menu is Clicked", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if(item.getItemId() == R.id.action_settings){
+//            Toast.makeText(this, "Setting Menu is Clicked", Toast.LENGTH_SHORT).show();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     @Override
