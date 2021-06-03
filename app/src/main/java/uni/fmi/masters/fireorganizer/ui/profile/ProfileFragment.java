@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment {
     public static final String TAG = "TAG";
     public static final int GALLERY_REQUEST_CODE = 105;
     public static final String FIREBASE_COLLECTION_IMAGES = "images";
-    public static final String FIREBASE_IMAGE_TIMESTAMP = "uploaded at";
+    public static final String FIREBASE_IMAGE_TIMESTAMP = "uploadedAt";
     EditText emailET, firstNameET, lastNameET;
     Button cameraB, galleryB, editProfileB, updateB;
 

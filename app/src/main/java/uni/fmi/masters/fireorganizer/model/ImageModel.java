@@ -2,27 +2,28 @@ package uni.fmi.masters.fireorganizer.model;
 
 public class ImageModel {
 
-    private String imageTimeStamp,  PicassoUrl;
+    private String uploadedAt;
+    private String avatarPath;
 
     public ImageModel() {}
-    public ImageModel (String date, String url) {
-        this.imageTimeStamp = date;
-        this.PicassoUrl = url;
+    public ImageModel (String uploadedAt, String avatarPath) {
+        this.uploadedAt = uploadedAt;
+        this.avatarPath = avatarPath;
     }
 
-    public String getImageTimeStamp() {
-        return imageTimeStamp;
+    public String getUploadedAt() {
+        return uploadedAt;
     }
 
-    public void setImageTimeStamp(String imageTimeStamp) {
-        this.imageTimeStamp = imageTimeStamp;
+    public void setUploadedAt(String uploadedAt) {
+        this.uploadedAt = uploadedAt;
     }
 
-    public String getPicassoUrl() {
-        return PicassoUrl;
+    public String getAvatarPath() {
+        return avatarPath;
     }
 
-    public void setPicassoUrl(String picassoUrl) {
-        PicassoUrl = picassoUrl;
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
 }

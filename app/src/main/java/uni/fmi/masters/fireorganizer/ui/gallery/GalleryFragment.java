@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +23,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uni.fmi.masters.fireorganizer.Authentication.RegisterActivity;
 import uni.fmi.masters.fireorganizer.R;
 import uni.fmi.masters.fireorganizer.model.ImageModel;
@@ -36,7 +40,6 @@ public class GalleryFragment extends Fragment {
     FirebaseAuth fAuth;
     FirebaseFirestore db;
     FirestoreRecyclerAdapter<ImageModel, ImageViewHolder> imageAdapter;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,8 +59,8 @@ public class GalleryFragment extends Fragment {
         imageAdapter = new FirestoreRecyclerAdapter<ImageModel, ImageViewHolder>(allImages) {
             @Override
             protected void onBindViewHolder(@NonNull ImageViewHolder imageViewHolder, int i, @NonNull ImageModel imageModel) {
-                imageViewHolder.timestamp.setText(imageModel.getImageTimeStamp());
-                Picasso.get().load(imageModel.getPicassoUrl())
+                imageViewHolder.timestamp.setText(imageModel.getUploadedAt());
+                Picasso.get().load(imageModel.getAvatarPath())
                         .fit()
                         .centerCrop()
                         .into(imageViewHolder.galleryImg);
@@ -74,6 +77,7 @@ public class GalleryFragment extends Fragment {
         imagesList = root.findViewById(R.id.galleryRecyclerView);
         imagesList.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
         imagesList.setAdapter(imageAdapter);
+
 
 
         return root;

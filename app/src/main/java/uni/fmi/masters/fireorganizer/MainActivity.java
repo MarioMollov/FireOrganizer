@@ -16,10 +16,13 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -98,45 +101,24 @@ public class MainActivity extends AppCompatActivity {
         ImageView headerAvatar = headerView.findViewById(R.id.headerImageView);
 
         documentReference = db.collection(RegisterActivity.COLLECTION_USERS).document(userID);
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(isLogged){
+                    String fname = value.getString(RegisterActivity.FIREBASE_FIRST_NAME);
+                    String lname = value.getString(RegisterActivity.FIREBASE_LAST_NAME);
+                    String username = fname + " " + lname;
+                    String email = value.getString(RegisterActivity.FIREBASE_EMAIL);
+                    String avatarUri = value.getString(RegisterActivity.FIREBASE_AVATAR_PATH);
 
-                String fname = documentSnapshot.getString(RegisterActivity.FIREBASE_FIRST_NAME);
-                String lname = documentSnapshot.getString(RegisterActivity.FIREBASE_LAST_NAME);
-                String username = fname + " " + lname;
-                String email = documentSnapshot.getString(RegisterActivity.FIREBASE_EMAIL);
-                String avatarUri = documentSnapshot.getString(RegisterActivity.FIREBASE_AVATAR_PATH);
 
-
-                headerUsername.setText(username);
-                headerEmail.setText(email);
-                Picasso.get().load(avatarUri).into(headerAvatar);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
+                    headerUsername.setText(username);
+                    headerEmail.setText(email);
+                    Picasso.get().load(avatarUri).into(headerAvatar);
+                }
             }
         });
-
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        if(item.getItemId() == R.id.action_settings){
-//            Toast.makeText(this, "Setting Menu is Clicked", Toast.LENGTH_SHORT).show();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
 
     @Override
     public boolean onSupportNavigateUp() {
