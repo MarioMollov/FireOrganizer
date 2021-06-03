@@ -58,17 +58,20 @@ public class ProfileFragment extends Fragment {
     public static final int CAMERA_REQUEST_CODE = 102;
     public static final String TAG = "TAG";
     public static final int GALLERY_REQUEST_CODE = 105;
+    public static final String FIREBASE_COLLECTION_IMAGES = "images";
+    public static final String FIREBASE_IMAGE_TIMESTAMP = "uploaded at";
     EditText emailET, firstNameET, lastNameET;
     Button cameraB, galleryB, editProfileB, updateB;
+
     ImageView avatarIV;
-    String userID;
-    String currentPhotoPath;
+    String userID, currentPhotoPath;
 
     FirebaseAuth fAuth;
     FirebaseUser fUser;
     FirebaseFirestore db;
     DocumentReference documentReference;
     StorageReference storageReference;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -100,7 +103,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(MainActivity.isLogged){
-                    Uri avatarUri = Uri.parse(value.getString(RegisterActivity.FIREBASE_AVATAR_PATH));
+                    String avatarUri = value.getString(RegisterActivity.FIREBASE_AVATAR_PATH);
                     String email = value.getString(RegisterActivity.FIREBASE_EMAIL);
                     String fname = value.getString(RegisterActivity.FIREBASE_FIRST_NAME);
                     String lname = value.getString(RegisterActivity.FIREBASE_LAST_NAME);
@@ -108,7 +111,8 @@ public class ProfileFragment extends Fragment {
                     emailET.setText(email);
                     firstNameET.setText(fname);
                     lastNameET.setText(lname);
-                    avatarIV.setImageURI(avatarUri);
+                    Picasso.get().load(avatarUri).into(avatarIV);
+
 
                 }
             }
@@ -243,8 +247,7 @@ public class ProfileFragment extends Fragment {
                 String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
                 String imageFileName = "JPEG_" + timeStamp + "." + getFileExt(contentUri);
                 Log.d(TAG, "onActivityResult Gallery image Uri: " + imageFileName);
-                avatarIV.setImageURI(contentUri);
-
+                //avatarIV.setImageURI(contentUri);
                 uploadImageToFirebase(imageFileName, contentUri);
 
             }
@@ -252,21 +255,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void uploadImageToFirebase(String name, Uri contentUri) {
-
-        documentReference = db.collection(RegisterActivity.COLLECTION_USERS).document(userID);
-        Map<String, Object> user = new HashMap<>();
-        user.put(RegisterActivity.FIREBASE_AVATAR_PATH, contentUri.toString());
-        documentReference.update(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "Avatar path was updated in Firestore");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e(TAG, "Update avatar error:" + e.getMessage());
-            }
-        });
 
         StorageReference image = storageReference.child(userID + "/" + name);
         image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -276,12 +264,46 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onSuccess(Uri uri) {
                         Log.d(TAG, "Uploaded image url is: " + uri.toString());
+                        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
+
+                        documentReference = db.collection(RegisterActivity.COLLECTION_USERS).document(userID)
+                                .collection(FIREBASE_COLLECTION_IMAGES).document();
+                        Map<String, Object> userImages = new HashMap<>();
+                        userImages.put(RegisterActivity.FIREBASE_AVATAR_PATH, uri.toString());
+                        userImages.put(FIREBASE_IMAGE_TIMESTAMP, timeStamp);
+                        documentReference.set(userImages).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Image path was updated in Firestore images collection");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "Update images collection error:" + e.getMessage());
+                            }
+                        });
+
+                        documentReference = db.collection(RegisterActivity.COLLECTION_USERS).document(userID);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put(RegisterActivity.FIREBASE_AVATAR_PATH, uri.toString());
+                        documentReference.update(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "Avatar path was updated in Firestore");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.e(TAG, "Update avatar error:" + e.getMessage());
+                            }
+                        });
 
                         Picasso.get().load(uri).into(avatarIV);
                     }
                 });
 
                 Toast.makeText(getContext(), "Image is Uploaded", Toast.LENGTH_SHORT).show();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

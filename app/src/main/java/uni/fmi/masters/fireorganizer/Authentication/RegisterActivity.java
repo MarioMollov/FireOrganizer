@@ -104,11 +104,6 @@ public class RegisterActivity extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(fname + " " + lname)
-                                .build();
-                        fAuth.getCurrentUser().updateProfile(request);
-
 
                         MainActivity.isLogged = true;
                         Toast.makeText(RegisterActivity.this, "User Created", Toast.LENGTH_SHORT).show();
@@ -126,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
                         user.put(FIREBASE_LAST_NAME,lname);
                         user.put(FIREBASE_EMAIL,email);
                         user.put(FIREBASE_PASSWORD, password);
-                        user.put(FIREBASE_AVATAR_PATH," null");
+                        user.put(FIREBASE_AVATAR_PATH, "null");
 
                         // save created user data
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {

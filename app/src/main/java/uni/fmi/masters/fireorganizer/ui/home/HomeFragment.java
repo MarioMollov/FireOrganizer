@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import uni.fmi.masters.fireorganizer.R;
 import uni.fmi.masters.fireorganizer.Authentication.RegisterActivity;
@@ -47,8 +48,8 @@ public class HomeFragment extends Fragment {
         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Uri avatarUri = Uri.parse(documentSnapshot.getString(RegisterActivity.FIREBASE_AVATAR_PATH));
-                homeAvatarIV.setImageURI(avatarUri);
+                String avatarUri = documentSnapshot.getString(RegisterActivity.FIREBASE_AVATAR_PATH);
+                Picasso.get().load(avatarUri).into(homeAvatarIV);
                 greetingsTV.setText("Welcome, " + documentSnapshot.getString(RegisterActivity.FIREBASE_FIRST_NAME));
             }
         }).addOnFailureListener(new OnFailureListener() {

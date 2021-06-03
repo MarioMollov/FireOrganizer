@@ -6,11 +6,18 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -23,6 +30,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import uni.fmi.masters.fireorganizer.Authentication.LoginActivity;
+import uni.fmi.masters.fireorganizer.Authentication.RegisterActivity;
+import uni.fmi.masters.fireorganizer.ui.notes.AddNoteActivity;
 import uni.fmi.masters.fireorganizer.ui.profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
     public static boolean isLogged = true;
 
     FirebaseAuth fAuth;
+    FirebaseFirestore db;
+    DocumentReference documentReference;
+    String userID;
 
 
 
@@ -77,12 +89,36 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fAuth = FirebaseAuth.getInstance();
-        View headerView = navigationView.getHeaderView(0);
-        TextView username = headerView.findViewById(R.id.headerUsernameTextView);
-        TextView email = headerView.findViewById(R.id.headerEmailTextView);
+        db = FirebaseFirestore.getInstance();
+        userID = fAuth.getCurrentUser().getUid();
 
-        username.setText(fAuth.getCurrentUser().getDisplayName());
-        email.setText(fAuth.getCurrentUser().getEmail());
+        View headerView = navigationView.getHeaderView(0);
+        TextView headerUsername = headerView.findViewById(R.id.headerUsernameTextView);
+        TextView headerEmail = headerView.findViewById(R.id.headerEmailTextView);
+        ImageView headerAvatar = headerView.findViewById(R.id.headerImageView);
+
+        documentReference = db.collection(RegisterActivity.COLLECTION_USERS).document(userID);
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                String fname = documentSnapshot.getString(RegisterActivity.FIREBASE_FIRST_NAME);
+                String lname = documentSnapshot.getString(RegisterActivity.FIREBASE_LAST_NAME);
+                String username = fname + " " + lname;
+                String email = documentSnapshot.getString(RegisterActivity.FIREBASE_EMAIL);
+                String avatarUri = documentSnapshot.getString(RegisterActivity.FIREBASE_AVATAR_PATH);
+
+
+                headerUsername.setText(username);
+                headerEmail.setText(email);
+                Picasso.get().load(avatarUri).into(headerAvatar);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
 
     }
 
